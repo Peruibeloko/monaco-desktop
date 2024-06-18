@@ -1,17 +1,12 @@
-import { useState } from 'react';
 import MonacoEditor, { MonacoEditorProps } from 'react-monaco-editor';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const Editor = () => {
-  const [data, setData] = useState('');
-
-  const changeHandler = (text: string) => {
-    console.log(text, data);
-    setData(text);
-  };
+  const size = useWindowSize();
 
   const options: MonacoEditorProps = {
     theme: 'vs-dark',
-    onChange: changeHandler
+    ...size
   };
 
   return <MonacoEditor {...options} />;
