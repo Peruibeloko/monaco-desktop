@@ -11,13 +11,6 @@ fn save(contents: &str) -> Result<(), String> {
         String::from(format!("Failed to save to file: {:#?}", err))
     };
 
-    // match FileDialog::new().save_file() {
-    //   Some(file_path) => {
-    //     fs::write(file_path, contents).map_err(map_err)
-    //   },
-    //   None => Err("Canceled interaction".into()),
-    // }
-
     FileDialog::new()
       .save_file()
       .map_or_else(
@@ -31,13 +24,6 @@ fn load() -> Result<String, String> {
     let map_err = |err| {
       String::from(format!("Failed to load file: {:#?}", err))
   };
-
-  // match FileDialog::new().pick_file() {
-  //   Some(file_path) => {
-  //     fs::read_to_string(file_path).map_err(map_err)
-  //   },
-  //   None => Err("Canceled interaction".into()),
-  // }
 
   FileDialog::new()
       .pick_file()
