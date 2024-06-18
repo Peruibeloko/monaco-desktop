@@ -1,7 +1,6 @@
-# Tauri + React + Typescript
+# Monaco for Desktop
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+This project is a simple Tauri wrapper around Monaco, with the addition of file reading and writing.
+For when you just want a nice editor, but you don't want a full blown VS Code.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Frontend is ~~unfortunately~~ built using React and the [@monaco-editor/react](https://github.com/suren-atoyan/monaco-react) package
