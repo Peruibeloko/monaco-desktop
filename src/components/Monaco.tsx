@@ -1,29 +1,28 @@
 import { Editor, EditorProps, Monaco as MonacoInstance } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { useCallback } from 'react';
+import actions from '../actions';
+import { useWindowSize } from '../hooks/useWindowSize';
 
-interface Props {
-  size: {
-    height: number;
-    width: number;
-  };
-  actions: {
-    save: (text: string) => void;
-  };
-}
-
-const Monaco = ({ size, actions }: Props) => {
+const Monaco = () => {
   const onMount = useCallback((editor: editor.IStandaloneCodeEditor, monaco: MonacoInstance) => {
-    let saveAction = editor.addAction({
-      id: 'save',
-      label: 'Save',
-      run: () => actions.save(editor.getValue())
-    });
-
-    editor.addCommand(monaco.KeyCode.Ctrl | monaco.KeyCode.KeyS, () => actions.save(editor.getValue()));
+    const disposables = [
+      editor.addAction({
+        id: 'save',
+        label: 'Save',
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
+        run: ed => actions.save(ed.getValue())
+      }),
+      editor.addAction({
+        id: 'load',
+        label: 'Open File...',
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyO],
+        run: async ed => await actions.load(ed)
+      })
+    ];
 
     return () => {
-      saveAction.dispose();
+      disposables.map(d => d.dispose());
     };
   }, []);
 
@@ -31,7 +30,7 @@ const Monaco = ({ size, actions }: Props) => {
     language: 'plaintext',
     theme: 'vs-dark',
     onMount,
-    ...size
+    ...useWindowSize()
   };
 
   return <Editor {...options} />;
