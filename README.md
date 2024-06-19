@@ -1,11 +1,13 @@
 # Monaco for Desktop
 
 This project is a simple Tauri wrapper around Monaco, with the addition of file reading and writing.
-For when you just want a nice editor, but you don't want a full blown VS Code.
 
-Frontend is ~~unfortunately~~ built using React and the [@monaco-editor/react](https://github.com/suren-atoyan/monaco-react) package
+The original plan was to use Vue.js, but wrapping Monaco presented a challange I'm not really in the mood for right now, so the frontend ended up in React using the [@monaco-editor/react](https://github.com/suren-atoyan/monaco-react) package
 
-## Features
+> [!IMPORTANT]
+> Currently only building from source is available. As soon as all basic features are completed, prebuilt binaries will be available for download directly from GitHub.
+
+## Basic Features
 
 - [x] "Open file" and "Save file"
 - [ ] Save As...
@@ -18,3 +20,4 @@ Frontend is ~~unfortunately~~ built using React and the [@monaco-editor/react](h
 - [ ] Syntax Highlighting
 - [ ] Line count, cursor position
 - [ ] File encoding
+- [ ] Automated build pipeline
