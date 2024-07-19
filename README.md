@@ -7,8 +7,8 @@ Frontend is ~~unfortunately~~ built using React and the [@monaco-editor/react](h
 
 ## Features
 
-- [x] "Open file" and "Save file"
-- [ ] Save As...
+- [X] "Open file" and "Save file"
+- [X] Save As...
 - [ ] Tabs
 - [ ] Open from context menu
 
