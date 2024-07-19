@@ -5,7 +5,7 @@
 use rfd::FileDialog;
 use serde_json::{json, Value};
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 #[tauri::command]
 fn save(contents: &str, file_path: &str) -> Result<(), String> {
@@ -30,25 +30,28 @@ fn save_as(contents: &str) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn load() -> Result<Value, Value> {
-    FileDialog::new().pick_file().map_or_else(
-        || {
-            Err(json!({
-                "contents": "User cancelled",
-                "path": "temp0"
-            }))
-        },
-        |path| match fs::read_to_string(&path) {
-            Ok(data) => Ok(json!({
-                "contents": data,
-                "path": &path
-            })),
-            Err(err) => Err(json!({
-                "contents": format!("Failed to load file: {:#?}", err),
-                "path": path
-            })),
-        },
-    )
+fn load() -> Value {
+    let path = match FileDialog::new().pick_file() {
+        Some(selection) => selection,
+        None => Path::new("temp0").to_path_buf(),
+    };
+
+    if (path.to_str() == Some("temp0")) {
+        return json!({
+            "contents": "No file selected",
+            "path": path
+        });
+    }
+
+    let contents = match fs::read_to_string(&path) {
+        Ok(data) => data,
+        Err(err) => format!("Failed to load file: {:#?}", err),
+    };
+
+    json!({
+        "contents": contents,
+        "path": path,
+    })
 }
 
 fn main() {
