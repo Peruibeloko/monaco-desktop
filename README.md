@@ -7,17 +7,14 @@ The original plan was to use Vue.js, but wrapping Monaco presented a challenge I
 > [!IMPORTANT]
 > Currently only building from source is available. As soon as all basic features are completed, prebuilt binaries will be available for download directly from GitHub.
 
-## Basic Features
+## Current Features
 
-- [X] "Open file" and "Save file"
-- [X] Save As...
-- [ ] Tabs
-- [ ] Open from context menu
+- Open, create, edit and save files
+- Tabbed file management
+- Open from context menu for quick access (Windows only)
 
-## Planned
+## Planned Features
 
-- [ ] Themes
-- [ ] Syntax Highlighting
-- [ ] Line count, cursor position
-- [ ] File encoding
-- [ ] Automated build pipeline
+- Themes
+- Syntax Highlighting
+- Line count, cursor position
