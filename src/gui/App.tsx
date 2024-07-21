@@ -1,5 +1,5 @@
 import './App.css';
-import Monaco from './components/Monaco';
+import Monaco from './Monaco';
 
 function App() {
   return <Monaco />;

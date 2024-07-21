@@ -1,5 +1,4 @@
 import { invoke } from '@tauri-apps/api';
-import { editor } from 'monaco-editor';
 
 export const save = (contents: string, filePath: string) => {
   const path = /temp\d+/.test(filePath) ? '' : filePath;
@@ -9,17 +8,21 @@ export const save = (contents: string, filePath: string) => {
 export const saveAs = async (contents: string) => {
   // TODO notify the user when saving a new file errors
   // ? maybe show a system dialog when the error happens in rust?
-  
-  return invoke<string>('save_as', { contents }).catch(err => (console.error(err), 'temp0'));
+
+  return invoke<string>('save_as', { contents })
+    .catch(console.error)
+    .then(() => 'temp0');
 };
 
-export const load = async (editor: editor.ICodeEditor) => {
+export const load = async () => {
   interface FileLoadResult {
     contents: string;
     path: string;
   }
 
-  return await invoke<FileLoadResult>('load', {}).catch(
-    err => (console.error(err), { contents: 'Error loading file', path: 'temp0' })
-  );
+  return await invoke<FileLoadResult>('load', {});
+};
+
+export const loadGivenPath = async (path: string) => {
+  return await invoke<string>('load_given_path', { path });
 };
