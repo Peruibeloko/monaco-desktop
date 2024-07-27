@@ -1,7 +1,10 @@
 use rfd::FileDialog;
 use serde_json::{json, Value};
+use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+
+const TEMP_FILE_PATH: &str = "<temp>";
 
 #[tauri::command]
 pub fn save(contents: &str, file_path: &str) -> Result<(), String> {
@@ -29,10 +32,10 @@ pub fn save_as(contents: &str) -> Result<(), String> {
 pub fn load() -> Value {
     let path = match FileDialog::new().pick_file() {
         Some(selection) => selection,
-        None => Path::new("temp0").to_path_buf(),
+        None => Path::new(TEMP_FILE_PATH).to_path_buf(),
     };
 
-    if (path.to_str() == Some("temp0")) {
+    if (path.to_str() == Some(TEMP_FILE_PATH)) {
         return json!({
             "contents": "No file selected",
             "path": path

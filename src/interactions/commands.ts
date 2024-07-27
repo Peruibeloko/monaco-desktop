@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api';
+import { TEMP_FILE_PATH } from '../constants';
 
 export const save = (contents: string, filePath: string) => {
   const path = /temp\d+/.test(filePath) ? '' : filePath;
@@ -11,7 +12,7 @@ export const saveAs = async (contents: string) => {
 
   return invoke<string>('save_as', { contents })
     .catch(console.error)
-    .then(() => 'temp0');
+    .then(() => TEMP_FILE_PATH);
 };
 
 export const load = async () => {

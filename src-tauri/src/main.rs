@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 #![allow(unused)] // get rid of warnings for unused
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri::utils::platform::current_exe;
 use winreg::enums::HKEY_CURRENT_USER;
@@ -54,7 +55,7 @@ fn add_to_context_menu(editor_path: PathBuf) {
     
     // todo: this adds unecessary backslash escapes to the path, find another way to interpolate
     // ? maybe array join?
-    command.set_value("", &format!("{:?} \"%1\"", editor_path).as_str());
+    command.set_value("", &vec![editor_path.to_str().unwrap_or_default(), "\"%1\""].join(" "));
 }
 
 #[cfg(target_os = "macos")]
@@ -71,19 +72,19 @@ fn main() {
             file::save,
             file::save_as
         ])
-        .setup(|app| {
-            let path_to_editor = match current_exe() {
-                Ok(path) => path,
-                Err(_) => return Ok(()),
-            };
+        // .setup(|app| {
+        //     let path_to_editor = match current_exe() {
+        //         Ok(path) => path,
+        //         Err(_) => return Ok(()),
+        //     };
 
-            if (is_in_context_menu()) {
-                return Ok(());
-            }
+        //     if (is_in_context_menu()) {
+        //         return Ok(());
+        //     }
 
-            add_to_context_menu(path_to_editor);
-            Ok(())
-        })
+        //     add_to_context_menu(path_to_editor);
+        //     Ok(())
+        // })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
