@@ -1,0 +1,23 @@
+div.tabs {
+  --gray: color-mix(in srgb, #c1c1c1 50%, #1e1e1e 25%);
+  background-color: #1e1e1e;
+  color: #c1c1c1;
+  font-family: monospace;
+  border-bottom: 1px solid var(--gray);
+  display: flex;
+  height: 2rem;
+  
+  button {
+    cursor: pointer;
+    font-family: monospace;
+    background-color: #1e1e1e;
+    color: #c1c1c1;
+    width: fit-content;
+    max-width: 5rem;
+    overflow-x: hidden;
+    display: block;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-right: 1px solid var(--gray);
+  }
+}

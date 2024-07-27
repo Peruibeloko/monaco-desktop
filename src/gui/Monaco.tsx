@@ -1,17 +1,22 @@
 import { Editor, EditorProps } from '@monaco-editor/react';
 
-import { useTabs } from '../hooks/useTabs';
+import { TabManager } from '../hooks/useTabs';
 import { setupMonaco } from '../interactions/startup';
 import { useWindowSize } from '../hooks/useWindowSize';
 
-const Monaco = () => {
-  const TabManager = useTabs();
+interface Props {
+  tabManager: TabManager;
+}
 
+const Monaco = ({ tabManager }: Props) => {
+  
   const options: EditorProps = {
-    language: 'plaintext',
     theme: 'vs-dark',
-    onMount: setupMonaco(TabManager),
-    ...useWindowSize()
+    path: tabManager.currentFilePath,
+    onMount: setupMonaco(tabManager),
+    width: useWindowSize().width,
+    height: useWindowSize().height,
+    className: 'monacoEditorRoot'
   };
 
   return <Editor {...options} />;

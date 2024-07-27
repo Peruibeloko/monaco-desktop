@@ -12,6 +12,7 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
+  max-height: calc(100% - 11px);
   width: 100%;
   box-sizing: border-box;
 }
