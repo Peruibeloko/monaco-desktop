@@ -12,9 +12,11 @@ The original plan was to use Vue.js, but wrapping Monaco presented a challenge I
 - Open, create, edit and save files
 - Tabbed file management
 - Open from context menu for quick access (Windows only)
+- Syntax highlighting for included languages
 
 ## Planned Features
 
 - Themes
-- Syntax Highlighting
 - Line count, cursor position
+- Monaco settings
+- Monarch Editor
