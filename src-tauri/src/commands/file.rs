@@ -3,8 +3,27 @@ use serde_json::{json, Value};
 use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::cell::RefCell;
+use std::sync::Mutex;
+use std::rc::Rc;
+use std::borrow::BorrowMut;
+use lazy_static::lazy_static;
+
+lazy_static! {
+    pub static ref GLOBAL: Mutex<HashMap<String, String>> = Mutex::new(HashMap::new());
+}
 
 const TEMP_FILE_PATH: &str = "<temp>";
+
+pub fn add_to_cache(key: String, value: String) {
+    let mut hashmap = GLOBAL.lock().expect("poisoned lock");
+    hashmap.insert(key, value);
+}
+
+pub fn get_from_cache(key: String) -> Option<String> {
+    let hashmap = GLOBAL.lock().expect("poisoned lock");
+    hashmap.get(&key).map(|s| s.to_string())
+}
 
 #[tauri::command]
 pub fn save(contents: &str, file_path: &str) -> Result<(), String> {

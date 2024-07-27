@@ -9,6 +9,7 @@ use winreg::enums::HKEY_CURRENT_USER;
 use winreg::RegKey;
 
 mod commands;
+pub mod app;
 use commands::file;
 
 #[cfg(target_os = "windows")]
@@ -65,7 +66,10 @@ fn add_to_context_menu(editor_path: PathBuf) {}
 fn add_to_context_menu(editor_path: PathBuf) {}
 
 fn main() {
+    let app = app::App::new();
+
     tauri::Builder::default()
+        .manage(app)
         .invoke_handler(tauri::generate_handler![
             file::load,
             file::load_given_path,
